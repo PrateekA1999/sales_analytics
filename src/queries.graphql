@@ -1,0 +1,86 @@
+# Query 1: Get Customer Spending
+query GetCustomerSpending {
+  getCustomerSpending(customerId: "63f8b3d5a7b1d7f3b0a2c5e1") {
+    customerId
+    totalSpent
+    averageOrderValue
+    lastOrderDate
+  }
+}
+
+# Query 2: Get Top-Selling Products (Limit: 5)
+query GetTopSellingProducts {
+  getTopSellingProducts(limit: 5) {
+    productId
+    name
+    totalSold
+  }
+}
+
+# Query 3: Get Sales Analytics for a Date Range
+query GetSalesAnalytics {
+  getSalesAnalytics(
+    startDate: "2024-12-08T00:00:00.000Z"
+    endDate: "2025-02-07T23:59:59.000Z"
+  ) {
+    totalRevenue
+    completedOrders
+    categoryBreakdown {
+      category
+      revenue
+    }
+  }
+}
+
+# Query 4: Get Customer Orders with Pagination (Page 1, Limit 10)
+query GetCustomerOrders {
+  getCustomerOrders(
+    customerId: "63f8b3d5a7b1d7f3b0a2c5e1"
+    page: 1
+    limit: 10
+  ) {
+    orders {
+      _id
+      customerId
+      totalAmount
+      orderDate
+      status
+      products {
+        productId
+        quantity
+        priceAtPurchase
+      }
+    }
+    pagination {
+      totalOrders
+      currentPage
+      totalPages
+    }
+  }
+}
+
+# Mutation: Place a New Order
+mutation PlaceOrder {
+  placeOrder(
+    customerId: "63f8b3d5a7b1d7f3b0a2c5e1"
+    products: [
+      { productId: "63f8b3d5a7b1d7f3b0a2c5e5", quantity: 2 }
+      { productId: "63f8b3d5a7b1d7f3b0a2c5e6", quantity: 1 }
+    ]
+  ) {
+    success
+    message
+    order {
+      _id
+      customerId
+      totalAmount
+      orderDate
+      status
+      products {
+        productId
+        quantity
+        priceAtPurchase
+      }
+    }
+  }
+}
